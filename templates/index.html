@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Mystery Quest</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar"><a class="brand" href="/">🕵️ AI Mystery Quest</a><span class="mode">{{ "DEMO MODE" if demo else "GROQ AI MODE" }}</span></header>
+<main class="shell">
+  <section class="hero"><p class="eyebrow">YOUR NEXT CASE IS WAITING</p><h1>Think like a detective.</h1><p>Investigate evidence, question suspects, solve the puzzle, and close the case.</p></section>
+  <section class="case-grid" id="caseGrid">
+    {% for case in cases %}
+    <button class="case-card" data-case="{{ case.id }}">
+      <span class="case-icon">🔎</span><span class="difficulty">{{ case.difficulty }}</span>
+      <h2>{{ case.title }}</h2><p>{{ case.intro }}</p><span class="open-case">Open case →</span>
+    </button>
+    {% endfor %}
+  </section>
+  <section id="game" class="game hidden">
+    <div class="game-head"><div><p class="eyebrow">ACTIVE INVESTIGATION</p><h2 id="caseTitle"></h2></div><button class="ghost" id="backBtn">← Cases</button></div>
+    <p id="caseIntro" class="case-intro"></p>
+    <div class="progress-wrap"><div class="progress-label"><span>Investigation progress</span><strong id="progressText">0%</strong></div><div class="progress"><span id="progressBar"></span></div></div>
+    <div class="columns">
+      <div class="panel"><h3>👥 Suspects</h3><div id="suspects"></div></div>
+      <div class="panel"><h3>🧩 Evidence & clues</h3><div id="clues"></div></div>
+    </div>
+    <div class="panel puzzle"><h3>🗝️ Case puzzle</h3><p id="puzzleQuestion"></p><div class="solve-row"><input id="guess" placeholder="Enter suspect's first name" autocomplete="off"><button id="solveBtn">Submit answer</button></div><p id="result" class="result" aria-live="polite"></p></div>
+    <div class="columns">
+      <div class="panel"><h3>💡 Ask for a hint</h3><p class="muted">Get a nudge without spoiling the mystery.</p><button id="hintBtn" class="secondary">Get hint</button><p id="hintReply" class="reply"></p></div>
+      <div class="panel"><h3>🤖 Detective AI chat</h3><div id="chatLog" class="chat-log"><p class="muted">Ask me about the evidence, timeline, or suspects.</p></div><form id="chatForm" class="chat-form"><input id="chatInput" placeholder="Ask Detective AI..." required><button>Send</button></form></div>
+    </div>
+  </section>
+  <section class="panel history-panel"><div class="history-head"><h2>📚 Game history</h2><button id="refreshHistory" class="ghost">Refresh</button></div><div id="historyList" class="muted">Loading history...</div></section>
+</main>
+<footer>AI Mystery Quest · Follow the clues. Find the truth.</footer>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>
